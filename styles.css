@@ -170,7 +170,24 @@ body.upside-down {
     animation: smoothReveal 0.8s ease-out forwards;
 }
 
-.reveal-1 { animation-delay: 1.0s; }
+@keyframes loveFadeIn {
+    0% { opacity: 0; filter: blur(5px); }
+    100% { opacity: 1; filter: blur(0); }
+}
+
+.love-text {
+    opacity: 0;
+    animation: loveFadeIn 2.5s ease-in-out forwards;
+}
+
+.love-delay-1 { animation-delay: 0.2s; } /* Super fast title reveal */
+.love-delay-2 { animation-delay: 2.0s; }
+.love-delay-3 { animation-delay: 4.0s; }
+.love-delay-4 { animation-delay: 6.0s; }
+.love-delay-5 { animation-delay: 8.0s; }
+.love-delay-6 { animation-delay: 10.0s; }
+
+.delay-1 { animation-delay: 0.5s; }
 .reveal-2 { animation-delay: 1.5s; }
 .reveal-3 { animation-delay: 2.0s; }
 .reveal-4 { animation-delay: 3.5s; }

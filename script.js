@@ -4,6 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const screen2 = document.getElementById('screen-2');
     const screen3 = document.getElementById('screen-3');
     
+    // Screen 3: Show Daughter Message
+    const btn3 = document.getElementById('btn-3');
+    const toastContent = document.getElementById('toast-content');
+    const daughterMessage = document.getElementById('daughter-message');
+
+    btn3.addEventListener('click', () => {
+        toastContent.style.display = 'none';
+        daughterMessage.classList.remove('hidden');
+        // The CSS animations on .love-text will automatically trigger when .hidden is removed!
+    });
     const btn0 = document.getElementById('btn-0');
     const btn1 = document.getElementById('btn-1');
     const btn2 = document.getElementById('btn-2');
