@@ -379,18 +379,18 @@ body.upside-down {
 .screen.active .reveal-7,
 .screen.active .reveal-8,
 .screen.active .reveal-9 {
-    animation: smoothReveal 0.9s ease-out forwards;
+    animation: smoothReveal 1.0s ease-out forwards;
 }
 
 .screen.active .reveal-1 { animation-delay: 0.5s; }  /* "Verification complete. ✅" */
-.screen.active .reveal-2 { animation-delay: 1.7s; }  /* "Welcome to Level 70! 🏆" */
-.screen.active .reveal-3 { animation-delay: 2.9s; }  /* "You've officially unlocked:" */
-.screen.active .reveal-4 { animation-delay: 4.1s; }  /* "Unexplained phantom aches" */
-.screen.active .reveal-5 { animation-delay: 5.3s; }  /* "Uncontrollable urges to nap in recliners" */
-.screen.active .reveal-6 { animation-delay: 6.5s; }  /* "The absolute legal right to complain..." */
-.screen.active .reveal-7 { animation-delay: 7.7s; }  /* "Making a mandatory groan noise..." */
-.screen.active .reveal-8 { animation-delay: 8.9s; }  /* "The superpower to fall asleep 3 minutes..." */
-.screen.active .reveal-9 { animation-delay: 10.2s; } /* Accept button */
+.screen.active .reveal-2 { animation-delay: 2.2s; }  /* "Welcome to Level 70! 🏆" */
+.screen.active .reveal-3 { animation-delay: 3.9s; }  /* "You've officially unlocked:" */
+.screen.active .reveal-4 { animation-delay: 5.6s; }  /* "Unexplained phantom aches" */
+.screen.active .reveal-5 { animation-delay: 7.3s; }  /* "Uncontrollable urges to nap in recliners" */
+.screen.active .reveal-6 { animation-delay: 9.0s; }  /* "The absolute legal right to complain..." */
+.screen.active .reveal-7 { animation-delay: 10.7s; } /* "Making a mandatory groan noise..." */
+.screen.active .reveal-8 { animation-delay: 12.4s; } /* "The superpower to fall asleep 3 minutes..." */
+.screen.active .reveal-9 { animation-delay: 14.2s; } /* Accept button */
 
 .st-text {
     opacity: 0;
