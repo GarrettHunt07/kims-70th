@@ -296,6 +296,10 @@ button:active {
     background-color: #111;
     transform: translateZ(0);
     contain: paint layout;
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none; /* Let container handle mouse drag and wheel smoothly */
 }
 
 /* --- Stranger Things Vibe for Screen 1 --- */
@@ -594,6 +598,42 @@ body.upside-down {
         font-size: 1.05rem;
         padding: 12px 24px;
         margin-top: 0.5rem;
+    }
+
+    /* Screen 3 / Toast & Daughter Message Mobile Optimization (lifts button up) */
+    .content-overlay {
+        width: 94%;
+        max-width: 480px;
+    }
+    .content-overlay h1 {
+        font-size: 1.75rem;
+        padding: 7px 16px;
+        margin: 0.2rem auto 0.5rem auto;
+        border-radius: 14px;
+    }
+    .content-overlay h2 {
+        font-size: 1.45rem;
+        padding: 6px 16px;
+        margin: 0.2rem auto 0.5rem auto;
+        border-radius: 12px;
+    }
+    .content-overlay p {
+        font-size: 1.02rem;
+        line-height: 1.45;
+        padding: 6px 14px;
+        margin: 0.22rem auto;
+        border-radius: 10px;
+    }
+    .content-overlay .signature {
+        font-size: 1.25rem;
+        padding: 7px 18px;
+        margin: 0.35rem auto 0.2rem auto;
+        border-radius: 12px;
+    }
+    #btn-3 {
+        font-size: 1.02rem !important;
+        padding: 12px 20px !important;
+        margin-top: 0.6rem !important;
     }
 }
 

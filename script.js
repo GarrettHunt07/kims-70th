@@ -360,6 +360,53 @@ document.addEventListener('DOMContentLoaded', () => {
         container.addEventListener('touchend', finishTouch, { passive: true });
         container.addEventListener('touchcancel', finishTouch, { passive: true });
 
+        // --- DESKTOP MOUSE WHEEL / TRACKPAD SCROLLING ---
+        container.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            pauseAndScheduleResume();
+            track.style.transition = 'none';
+            // Supports both horizontal trackpads and standard vertical mouse wheels
+            const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+            currentOffset -= delta * 1.35;
+            wrapOffset();
+            track.style.transform = `translate3d(${currentOffset}px, 0, 0)`;
+        }, { passive: false });
+
+        // --- DESKTOP MOUSE CLICK & DRAG ---
+        container.style.cursor = 'grab';
+        let isMouseDown = false;
+        let mouseStartX = 0;
+        let mouseStartOffset = 0;
+
+        container.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return; // Left click only
+            if (e.target.tagName === 'BUTTON') return;
+            isMouseDown = true;
+            isInteracting = true;
+            pauseAndScheduleResume();
+            mouseStartX = e.clientX;
+            mouseStartOffset = currentOffset;
+            container.style.cursor = 'grabbing';
+            track.style.transition = 'none';
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            pauseAndScheduleResume();
+            const diffX = e.clientX - mouseStartX;
+            currentOffset = mouseStartOffset + diffX;
+            wrapOffset();
+            track.style.transform = `translate3d(${currentOffset}px, 0, 0)`;
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (!isMouseDown) return;
+            isMouseDown = false;
+            isInteracting = false;
+            container.style.cursor = 'grab';
+            pauseAndScheduleResume();
+        });
+
         // --- DESKTOP ARROW NAVIGATION ---
         function stepSlide(direction) {
             pauseAndScheduleResume();
