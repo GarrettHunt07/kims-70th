@@ -32,40 +32,79 @@ document.addEventListener('DOMContentLoaded', () => {
         if (heartsAlreadyFell) return;
         heartsAlreadyFell = true;
 
-        const heartContainer = document.createElement('div');
-        heartContainer.id = 'heart-shower-container';
-        const targetParent = document.getElementById('screen-3') || document.body;
-        targetParent.appendChild(heartContainer);
+        console.log("Canvas shower of falling hearts triggered!");
 
-        const heartSymbols = ['❤️', '💖', '💕', '💗', '🥰', '💓', '✨'];
-        const totalHearts = 50;
+        const canvas = document.createElement('canvas');
+        canvas.id = 'heart-canvas-overlay';
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100vw';
+        canvas.style.height = '100vh';
+        canvas.style.height = '100dvh';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '999999';
+        document.body.appendChild(canvas);
 
-        for (let i = 0; i < totalHearts; i++) {
-            setTimeout(() => {
-                const heart = document.createElement('div');
-                heart.className = 'falling-heart';
-                heart.innerText = heartSymbols[i % heartSymbols.length];
-                
-                const leftPos = Math.random() * 92 + 4; // 4% to 96%
-                const size = Math.random() * 1.5 + 1.4; // 1.4rem to 2.9rem
-                const duration = Math.random() * 1.8 + 3.2; // 3.2s to 5.0s
-                
-                heart.style.left = `${leftPos}%`;
-                heart.style.fontSize = `${size}rem`;
-                heart.style.animationDuration = `${duration}s`;
-                heart.style.webkitAnimationDuration = `${duration}s`;
-                
-                // Cleanup after falling completely across the screen
-                setTimeout(() => {
-                    heart.remove();
-                    if (heartContainer && heartContainer.children.length === 0) {
-                        heartContainer.remove();
-                    }
-                }, (duration * 1000) + 300);
+        const ctx = canvas.getContext('2d');
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        ctx.scale(dpr, dpr);
 
-                heartContainer.appendChild(heart);
-            }, i * 85);
+        const symbols = ['❤️', '💖', '💕', '💗', '🥰', '💓'];
+        const hearts = [];
+        const numHearts = 48;
+
+        for (let i = 0; i < numHearts; i++) {
+            hearts.push({
+                x: Math.random() * window.innerWidth,
+                y: -(Math.random() * 220 + 40) - (i * 18),
+                speedY: Math.random() * 2.2 + 2.4,
+                speedX: (Math.random() - 0.5) * 1.2,
+                symbol: symbols[Math.floor(Math.random() * symbols.length)],
+                size: Math.floor(Math.random() * 16 + 26),
+                rotation: Math.random() * Math.PI * 2,
+                rotSpeed: (Math.random() - 0.5) * 0.035
+            });
         }
+
+        let animationFrameId;
+        const startTime = performance.now();
+
+        function render(now) {
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            let activeCount = 0;
+
+            hearts.forEach(h => {
+                h.y += h.speedY;
+                h.x += h.speedX + Math.sin(h.y / 28) * 0.75;
+                h.rotation += h.rotSpeed;
+
+                if (h.y < window.innerHeight + 70) {
+                    activeCount++;
+                    ctx.save();
+                    ctx.translate(h.x, h.y);
+                    ctx.rotate(h.rotation);
+                    ctx.font = `${h.size}px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.shadowColor = 'rgba(255, 77, 109, 0.8)';
+                    ctx.shadowBlur = 12;
+                    ctx.fillText(h.symbol, 0, 0);
+                    ctx.restore();
+                }
+            });
+
+            // Once all hearts fall past the bottom or after 7.5 seconds, clean up completely!
+            if (activeCount > 0 && now - startTime < 7500) {
+                animationFrameId = requestAnimationFrame(render);
+            } else {
+                cancelAnimationFrame(animationFrameId);
+                canvas.remove();
+            }
+        }
+        animationFrameId = requestAnimationFrame(render);
 
         // Soft gentle burst of pink/rose/gold confetti from the top
         if (typeof confetti === 'function') {
@@ -80,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+    window.showerFallingHearts = showerFallingHearts;
 
     // Attach directly to both standard and WebKit animationstart of "I love you so much."
     const loveYouLine = document.getElementById('love-you-line');
