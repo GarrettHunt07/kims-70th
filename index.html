@@ -11,15 +11,14 @@
 <body>
     <!-- Audio Elements -->
     <audio id="bg-audio-1" src="eerie_new.webm" loop></audio>
-    <audio id="bg-audio-scratch" src="scratch.webm"></audio>
     <audio id="bg-audio-2" src="funny_new.webm" loop></audio>
     <audio id="bg-audio-3" src="wave_on_wave.webm" loop></audio>
 
     <div id="app">
         <!-- Screen 0: Autoplay Bypass -->
         <section id="screen-0" class="screen active">
-            <h1>You have a special message... 💌</h1>
-            <p>Make sure your volume is turned up to hear the music!</p>
+            <h1>Incoming Encrypted Message...</h1>
+            <p>Click below to decrypt.</p>
             <button id="btn-0">Open Message</button>
         </section>
 
@@ -34,15 +33,16 @@
 
         <!-- Screen 2: The Roast -->
         <section id="screen-2" class="screen hidden">
-            <h1>Verification complete. ✅</h1>
-            <h2>Welcome to Level 70! 🏆</h2>
-            <p>You've officially unlocked:</p>
-            <ul>
+            <h1 class="bounce-1">Verification complete. ✅</h1>
+            <h2 class="bounce-2">Welcome to Level 70! 🏆</h2>
+            <p class="bounce-3">You've officially unlocked:</p>
+            <ul class="bounce-3" style="list-style-position: inside; text-align: left; display: inline-block;">
                 <li>Unexplained phantom aches</li>
                 <li>Uncontrollable urges to nap in recliners</li>
                 <li>The absolute legal right to complain about "kids these days"</li>
             </ul>
-            <button id="btn-2">Accept Your New Superpowers</button>
+            <br><br>
+            <button id="btn-2" class="bounce-3">Accept Your New Superpowers</button>
         </section>
 
         <!-- Screen 3: The Toast -->

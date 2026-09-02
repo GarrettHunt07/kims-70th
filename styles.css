@@ -156,10 +156,16 @@ body.upside-down {
     box-shadow: inset 0 0 150px rgba(139, 0, 0, 0.4);
 }
 
-body.flash-bang {
-    background-color: #ffffff !important;
-    transition: background-color 0s;
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.3) translateY(-50px); }
+    50% { opacity: 1; transform: scale(1.05) translateY(10px); }
+    70% { transform: scale(0.9) translateY(-5px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
 }
+
+.bounce-1 { opacity: 0; animation: bounceIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.5s; }
+.bounce-2 { opacity: 0; animation: bounceIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 1.5s; }
+.bounce-3 { opacity: 0; animation: bounceIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 2.5s; }
 
 .st-text {
     opacity: 0;
