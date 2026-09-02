@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
         audio1.pause();
         audio1.currentTime = 0;
         
-        // Start funny track
-        audio2.currentTime = 0;
+        // Start Stayin' Alive right at the chorus
+        audio2.currentTime = 62.5;
         audio2.play().catch(e => console.log("Audio 2 missing:", e));
 
         // Fire explosion confetti
