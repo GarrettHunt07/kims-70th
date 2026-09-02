@@ -654,5 +654,49 @@ body.upside-down {
 
 .hidden { display: none !important; }
 
+/* --- Falling Hearts Shower Effect (Daughter's Letter Climax) --- */
+#heart-shower-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.falling-heart {
+    position: absolute;
+    top: -60px;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform, opacity;
+    animation: fallAndSway linear forwards;
+    filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.7));
+}
+
+@keyframes fallAndSway {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg) scale(0.6);
+        opacity: 0;
+    }
+    12% {
+        opacity: 0.95;
+        transform: translateY(12vh) translateX(calc(var(--sway-dir, 1) * 15px)) rotate(10deg) scale(1.05);
+    }
+    50% {
+        transform: translateY(55vh) translateX(calc(var(--sway-dir, 1) * -22px)) rotate(-15deg) scale(1);
+    }
+    85% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(115vh) translateX(calc(var(--sway-dir, 1) * 28px)) rotate(25deg) scale(0.85);
+        opacity: 0;
+    }
+}
+
+
 
 

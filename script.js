@@ -26,12 +26,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2600);
     }
 
+    function showerFallingHearts() {
+        const heartContainer = document.createElement('div');
+        heartContainer.id = 'heart-shower-container';
+        document.body.appendChild(heartContainer);
+
+        const heartSymbols = ['❤️', '💖', '💕', '💗', '🥰', '✨'];
+        const totalHearts = 38;
+
+        for (let i = 0; i < totalHearts; i++) {
+            setTimeout(() => {
+                const heart = document.createElement('div');
+                heart.className = 'falling-heart';
+                heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                
+                // Random position and natural flutter physics
+                const leftPos = Math.random() * 92 + 4; // 4% to 96%
+                const size = Math.random() * 1.3 + 1.3; // 1.3rem to 2.6rem
+                const duration = Math.random() * 2.0 + 2.8; // 2.8s to 4.8s
+                const swayDir = Math.random() > 0.5 ? 1 : -1;
+                
+                heart.style.left = `${leftPos}%`;
+                heart.style.fontSize = `${size}rem`;
+                heart.style.animationDuration = `${duration}s`;
+                heart.style.setProperty('--sway-dir', swayDir);
+                
+                // Once they finish falling across the screen, automatically remove from DOM!
+                heart.addEventListener('animationend', () => {
+                    heart.remove();
+                    if (heartContainer && heartContainer.children.length === 0) {
+                        heartContainer.remove();
+                    }
+                });
+
+                heartContainer.appendChild(heart);
+            }, i * 110);
+        }
+
+        // Soft gentle burst of pink/rose/gold confetti from the top
+        confetti({
+            particleCount: 28,
+            spread: 85,
+            startVelocity: 14,
+            gravity: 0.5,
+            ticks: 220,
+            origin: { x: 0.5, y: -0.05 },
+            colors: ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffd700', '#ffffff']
+        });
+    }
+
     btn3.addEventListener('click', () => {
         btn3ClickedTime = Date.now();
         toastContent.style.display = 'none';
         daughterMessage.classList.remove('hidden');
         daughterMessage.classList.add('active');
         
+        // Trigger falling hearts right when "I love you so much" blooms into view (11.9s)
+        setTimeout(() => {
+            showerFallingHearts();
+        }, 11900);
+
         // If Free Bird has ALREADY started playing when he clicks the button:
         // Wait until the message is completely visible, then fade out after 5 seconds!
         if (freeBirdStarted) {
