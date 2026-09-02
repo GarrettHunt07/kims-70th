@@ -14,11 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
         daughterMessage.classList.remove('hidden');
         daughterMessage.classList.add('active');
         
-        // After 20 seconds after her final line appears (~38s after click),
-        // fade out the words so he can just watch the picture slideshow!
+        // Extended fade-out: gives Kim 30 full seconds to enjoy her message before it slowly fades out
         setTimeout(() => {
             daughterMessage.classList.add('fade-out');
-        }, 38000);
+        }, 52000);
     });
 
     // Tap/click screen 3 to bring the message back or hide it again
