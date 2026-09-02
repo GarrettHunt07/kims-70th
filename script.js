@@ -15,6 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const EXTRA_WAIT_MS = 5000;            // Wait 5 seconds after completely visible
     const TOTAL_MIN_DISPLAY_MS = DAUGHTER_FULL_REVEAL_MS + EXTRA_WAIT_MS; // 20.5s total
 
+    function permanentlyFadeOutMessage() {
+        if (!daughterMessage) return;
+        daughterMessage.classList.add('fade-out');
+        
+        // Once faded out completely (~2.5s), permanently remove from view and activate interactive photo controls!
+        setTimeout(() => {
+            daughterMessage.style.display = 'none';
+            activateInteractiveSlideshow();
+        }, 2600);
+    }
+
     btn3.addEventListener('click', () => {
         btn3ClickedTime = Date.now();
         toastContent.style.display = 'none';
@@ -25,16 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Wait until the message is completely visible, then fade out after 5 seconds!
         if (freeBirdStarted) {
             setTimeout(() => {
-                daughterMessage.classList.add('fade-out');
+                permanentlyFadeOutMessage();
             }, TOTAL_MIN_DISPLAY_MS);
-        }
-    });
-
-    // Tap/click screen 3 to bring the message back or hide it again
-    screen3.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON') return;
-        if (daughterMessage.classList.contains('active')) {
-            daughterMessage.classList.toggle('fade-out');
         }
     });
 
@@ -234,6 +237,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'pic166.jpg'
     ];
     
+    let currentOffset = 0;
+    let isInteracting = false;
+    let isAutoScrollPaused = false;
+    let resumeAutoScrollTimeout = null;
+    let halfWidth = 0;
+    let reelAnimationId = null;
+    let isSlideshowInteractive = false;
+
     function startFilmReel() {
         const track = document.getElementById('film-reel-track');
         if (!track || familyPictures.length === 0) return;
@@ -249,10 +260,132 @@ document.addEventListener('DOMContentLoaded', () => {
             img.decoding = 'async'; // Smooth background decoding
             track.appendChild(img);
         });
-        
-        // Let's give each image about 6 seconds of screen time as it scrolls by
-        const duration = familyPictures.length * 6; 
-        track.style.animation = `scrollReel ${duration}s linear infinite`;
+
+        // Initialize halfWidth once DOM renders
+        requestAnimationFrame(() => {
+            halfWidth = track.scrollWidth / 2;
+        });
+
+        // Smooth 60fps/120fps hardware-accelerated panoramic scroll
+        let lastTime = performance.now();
+        const baseSpeed = 1.05; // Gentle cinematic pan (~65px/sec)
+
+        function tick(now) {
+            const delta = Math.min((now - lastTime) / 16.67, 2.5);
+            lastTime = now;
+
+            if (!isAutoScrollPaused && !isInteracting) {
+                currentOffset -= baseSpeed * delta;
+                wrapOffset();
+                track.style.transform = `translate3d(${currentOffset}px, 0, 0)`;
+            }
+            reelAnimationId = requestAnimationFrame(tick);
+        }
+        reelAnimationId = requestAnimationFrame(tick);
+    }
+
+    function wrapOffset() {
+        const track = document.getElementById('film-reel-track');
+        if (!track) return;
+        if (halfWidth <= 0) {
+            halfWidth = track.scrollWidth / 2;
+        }
+        if (halfWidth > 0) {
+            if (currentOffset <= -halfWidth) {
+                currentOffset += halfWidth;
+            } else if (currentOffset > 0) {
+                currentOffset -= halfWidth;
+            }
+        }
+    }
+
+    function activateInteractiveSlideshow() {
+        if (isSlideshowInteractive) return;
+        isSlideshowInteractive = true;
+
+        const track = document.getElementById('film-reel-track');
+        const container = document.getElementById('film-reel-container') || screen3;
+        const prevBtn = document.getElementById('reel-prev');
+        const nextBtn = document.getElementById('reel-next');
+
+        // Reveal desktop navigation arrows with smooth fade-in
+        if (prevBtn) {
+            prevBtn.classList.remove('hidden');
+            setTimeout(() => prevBtn.classList.add('visible'), 100);
+        }
+        if (nextBtn) {
+            nextBtn.classList.remove('hidden');
+            setTimeout(() => nextBtn.classList.add('visible'), 100);
+        }
+
+        function pauseAndScheduleResume() {
+            isAutoScrollPaused = true;
+            clearTimeout(resumeAutoScrollTimeout);
+            resumeAutoScrollTimeout = setTimeout(() => {
+                isAutoScrollPaused = false;
+            }, 6000); // Resume auto-scroll after 6 seconds of inactivity
+        }
+
+        // --- MOBILE TOUCH SWIPING (HORIZONTAL FINGER DRAG) ---
+        let touchStartX = 0;
+        let touchStartOffset = 0;
+        let isTouching = false;
+
+        container.addEventListener('touchstart', (e) => {
+            if (e.touches.length !== 1) return;
+            isInteracting = true;
+            isTouching = true;
+            pauseAndScheduleResume();
+            touchStartX = e.touches[0].clientX;
+            touchStartOffset = currentOffset;
+            track.style.transition = 'none';
+        }, { passive: true });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!isTouching || e.touches.length !== 1) return;
+            pauseAndScheduleResume();
+            const diffX = e.touches[0].clientX - touchStartX;
+            currentOffset = touchStartOffset + diffX;
+            wrapOffset();
+            track.style.transform = `translate3d(${currentOffset}px, 0, 0)`;
+        }, { passive: true });
+
+        const finishTouch = () => {
+            if (!isTouching) return;
+            isTouching = false;
+            isInteracting = false;
+            pauseAndScheduleResume();
+        };
+
+        container.addEventListener('touchend', finishTouch, { passive: true });
+        container.addEventListener('touchcancel', finishTouch, { passive: true });
+
+        // --- DESKTOP ARROW NAVIGATION ---
+        function stepSlide(direction) {
+            pauseAndScheduleResume();
+            const stepAmount = Math.min(800, window.innerWidth * 0.75);
+            track.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
+            currentOffset += direction * stepAmount;
+            wrapOffset();
+            track.style.transform = `translate3d(${currentOffset}px, 0, 0)`;
+
+            setTimeout(() => {
+                track.style.transition = 'none';
+            }, 460);
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                stepSlide(1);
+            });
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                stepSlide(-1);
+            });
+        }
     }
 
     // Preload pictures in background from start so they are already cached
@@ -261,24 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = new Image();
             img.src = pic;
         });
-    }
-
-    // --- CONFETTI LOGIC ---
-    function startGentleConfetti() {
-        setInterval(() => {
-            confetti({
-                particleCount: 1,
-                startVelocity: 0,
-                ticks: 300,
-                gravity: 0.3,
-                origin: {
-                    x: Math.random(),
-                    y: Math.random() * 0.2 - 0.1
-                },
-                colors: ['#ffffff', '#ffb8b8', '#e94560'],
-                scalar: Math.random() * 0.8 + 0.4
-            });
-        }, 200);
     }
 
     // --- SONG BLENDING: WAVE ON WAVE -> FREE BIRD (LYNYRD SKYNYRD) ---
@@ -322,13 +437,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (elapsed >= TOTAL_MIN_DISPLAY_MS) {
                 // The message has already been completely visible for at least 5 seconds:
                 // Fade out right on cue with the start of Free Bird!
-                daughterMessage.classList.add('fade-out');
+                permanentlyFadeOutMessage();
             } else {
                 // Free Bird started before the message finished or before 5 seconds passed:
                 // Wait until it is completely visible, then fade out after 5 seconds!
                 const remainingWait = TOTAL_MIN_DISPLAY_MS - elapsed;
                 setTimeout(() => {
-                    daughterMessage.classList.add('fade-out');
+                    permanentlyFadeOutMessage();
                 }, remainingWait);
             }
         }

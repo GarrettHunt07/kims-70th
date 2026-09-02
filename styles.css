@@ -268,6 +268,9 @@ button:active {
     background-color: #000;
     display: flex;
     align-items: center;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 #film-reel-track {
@@ -507,5 +510,58 @@ body.upside-down {
     pointer-events: none;
 }
 
+/* --- Desktop Slideshow Navigation Arrows --- */
+.reel-nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: rgba(10, 15, 30, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity 1s ease-in, background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.reel-nav-btn.visible {
+    opacity: 0.75;
+}
+
+.reel-nav-btn.visible:hover {
+    opacity: 1;
+    background: rgba(0, 180, 216, 0.85);
+    transform: translateY(-50%) scale(1.12);
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
+}
+
+.reel-nav-btn.prev-btn {
+    left: 24px;
+}
+
+.reel-nav-btn.next-btn {
+    right: 24px;
+}
+
+/* Hide desktop arrow buttons on touch devices so mobile swipe is 100% clean */
+@media (hover: none) and (pointer: coarse) {
+    .reel-nav-btn {
+        display: none !important;
+    }
+}
+
 .hidden { display: none !important; }
+
 
