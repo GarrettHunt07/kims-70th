@@ -146,6 +146,51 @@ button:active {
     background-color: #000;
 }
 
+/* --- Stranger Things Vibe for Screen 1 --- */
+body {
+    transition: background-color 2s, box-shadow 2s;
+}
+
+body.upside-down {
+    background-color: #050510;
+    box-shadow: inset 0 0 150px rgba(139, 0, 0, 0.4);
+}
+
+.st-text {
+    opacity: 0;
+}
+
+.st-glow {
+    color: #ff2a2a;
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #8b0000;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.st-btn {
+    background-color: transparent;
+    border: 2px solid #ff2a2a;
+    color: #ff2a2a;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+.st-btn:hover {
+    background-color: #ff2a2a;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+}
+
+@keyframes stFadeIn {
+    0% { opacity: 0; transform: scale(0.95); filter: blur(4px); }
+    100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+.delay-1 { animation: stFadeIn 2s forwards 0.5s; }
+.delay-2 { animation: stFadeIn 2s forwards 2.5s; }
+.delay-3 { animation: stFadeIn 2s forwards 4.5s; }
+.delay-4 { animation: stFadeIn 2s forwards 6.5s; }
+.delay-5 { animation: stFadeIn 2s forwards 8.5s; }
+
 @keyframes scrollReel {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); } /* stops at halfway mark (the duplicated array) */

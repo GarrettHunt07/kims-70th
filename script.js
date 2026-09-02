@@ -33,11 +33,19 @@ document.addEventListener('DOMContentLoaded', () => {
     btn0.addEventListener('click', () => {
         audio1.play().catch(e => console.log("Audio 1 missing or blocked:", e));
         switchScreen(screen0, screen1);
+        
+        // Trigger Upside Down vibe
+        document.body.classList.add('upside-down');
+        startUpsideDownAsh();
     });
 
     // Screen 1 -> Screen 2 (Standard Explosion + Transition Music)
     btn1.addEventListener('click', () => {
-        // Switch Audio
+        // Stop Upside Down vibe
+        document.body.classList.remove('upside-down');
+        stopUpsideDownAsh();
+        
+        // Stop eerie music
         audio1.pause();
         audio1.currentTime = 0;
         
@@ -52,7 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
             origin: { y: 0.6 },
             colors: ['#e94560', '#ffffff', '#ffd700']
         });
-
+        
+        // Move to next screen
         switchScreen(screen1, screen2);
     });
 
@@ -217,4 +226,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
+
+
+    // --- UPSIDE DOWN ASH LOGIC ---
+    let ashInterval;
+    function startUpsideDownAsh() {
+        ashInterval = setInterval(() => {
+            confetti({
+                particleCount: 2,
+                startVelocity: 0,
+                ticks: 400,
+                gravity: -0.05,
+                origin: {
+                    x: Math.random(),
+                    y: Math.random() * 0.5 + 0.5
+                },
+                colors: ['#ffffff', '#cccccc', '#888888'],
+                shapes: ['circle', 'square'],
+                scalar: Math.random() * 0.4 + 0.1,
+                disableForReducedMotion: true
+            });
+        }, 300);
+    }
+    
+    function stopUpsideDownAsh() {
+        clearInterval(ashInterval);
+    }
 
