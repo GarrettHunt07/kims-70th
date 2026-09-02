@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Screen 0 -> Screen 1 (Bypass Autoplay & Start Eerie Music)
     btn0.addEventListener('click', () => {
+        requestWakeLock();
+        preloadFamilyPictures();
         audio1.play().catch(e => console.log("Audio 1 missing or blocked:", e));
         switchScreen(screen0, screen1);
         
@@ -219,13 +221,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = document.createElement('img');
             img.src = pic;
             img.className = 'film-frame';
-            img.loading = 'lazy'; // crucial for performance with 65 images
+            img.loading = 'eager'; // Eager loading prevents blackout when scrolling horizontally
+            img.decoding = 'async'; // Smooth background decoding
             track.appendChild(img);
         });
         
         // Let's give each image about 6 seconds of screen time as it scrolls by
         const duration = familyPictures.length * 6; 
         track.style.animation = `scrollReel ${duration}s linear infinite`;
+    }
+
+    // Preload pictures in background from start so they are already cached
+    function preloadFamilyPictures() {
+        familyPictures.forEach(pic => {
+            const img = new Image();
+            img.src = pic;
+        });
     }
 
     // --- CONFETTI LOGIC ---
@@ -302,4 +313,66 @@ document.addEventListener('DOMContentLoaded', () => {
     function stopFireworks() {
         clearInterval(fireworksInterval);
     }
+
+    // --- SCREEN WAKE LOCK (PREVENTS SCREEN TIMEOUT ON MOBILE/DESKTOP) ---
+    let wakeLock = null;
+
+    async function requestWakeLock() {
+        try {
+            if ('wakeLock' in navigator) {
+                wakeLock = await navigator.wakeLock.request('screen');
+                console.log('Screen Wake Lock active: display will not timeout.');
+                wakeLock.addEventListener('release', () => {
+                    console.log('Screen Wake Lock released.');
+                    wakeLock = null;
+                });
+            } else {
+                activateIOSWakeLockFallback();
+            }
+        } catch (err) {
+            console.log('Wake Lock note:', err);
+            activateIOSWakeLockFallback();
+        }
+    }
+
+    // Fallback for older iOS Safari: silent 1x1 inline video loop
+    function activateIOSWakeLockFallback() {
+        try {
+            if (document.getElementById('ios-wake-video')) return;
+            const canvas = document.createElement('canvas');
+            canvas.width = 1;
+            canvas.height = 1;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, 1, 1);
+            if (canvas.captureStream) {
+                const stream = canvas.captureStream(1);
+                const video = document.createElement('video');
+                video.id = 'ios-wake-video';
+                video.muted = true;
+                video.playsInline = true;
+                video.setAttribute('playsinline', '');
+                video.srcObject = stream;
+                video.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0.01;pointer-events:none;z-index:-1;';
+                document.body.appendChild(video);
+                video.play().catch(() => {});
+            }
+        } catch (e) {}
+    }
+
+    // Re-acquire lock if user switches away from tab/app and comes back
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+            requestWakeLock();
+        }
+    });
+
+    // Acquire on user interactions
+    ['click', 'touchstart', 'pointerdown'].forEach(evt => {
+        document.addEventListener(evt, () => {
+            if (!wakeLock) {
+                requestWakeLock();
+            }
+        }, { passive: true });
+    });
 

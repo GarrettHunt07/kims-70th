@@ -144,18 +144,19 @@ button:active {
     display: flex;
     height: 100%;
     width: max-content;
-    opacity: 0.35; /* Keep it dim so text is readable */
+    opacity: 0.65; /* Bright and vivid photos that never black out */
 }
 
 .film-frame {
     height: 100vh;
-    width: 80vw; /* Forces images to be large and prevents lazy-load width glitching */
-    flex-shrink: 0; /* Prevents the browser from squishing them */
-    border-left: 15px solid #000;
-    border-right: 15px solid #000;
+    width: 85vw;
+    max-width: 850px;
+    flex-shrink: 0;
+    border-left: 12px solid #000;
+    border-right: 12px solid #000;
     box-sizing: border-box;
-    object-fit: cover; /* Fills the frame nicely to make them look huge */
-    background-color: #000;
+    object-fit: cover;
+    background-color: #111;
 }
 
 /* --- Stranger Things Vibe for Screen 1 --- */
@@ -291,7 +292,16 @@ body.upside-down {
 .content-overlay {
     position: relative;
     z-index: 1;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+    background: rgba(12, 12, 22, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.12);
+    max-width: 600px;
+    width: 90%;
+    margin: auto;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 .hidden { display: none !important; }
