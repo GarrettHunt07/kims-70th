@@ -39,30 +39,46 @@ document.addEventListener('DOMContentLoaded', () => {
         startUpsideDownAsh();
     });
 
+    const audioScratch = document.getElementById('bg-audio-scratch');
+    audioScratch.volume = 0.8;
+
     // Screen 1 -> Screen 2 (Standard Explosion + Transition Music)
     btn1.addEventListener('click', () => {
-        // Stop Upside Down vibe
+        // Stop Upside Down vibe & Eerie music instantly
         document.body.classList.remove('upside-down');
         stopUpsideDownAsh();
-        
-        // Stop eerie music
         audio1.pause();
         audio1.currentTime = 0;
         
-        // Start funny track from the beginning
-        audio2.currentTime = 0;
-        audio2.play().catch(e => console.log("Audio 2 missing or blocked:", e));
-
-        // Fire explosion confetti
-        confetti({
-            particleCount: 150,
-            spread: 100,
-            origin: { y: 0.6 },
-            colors: ['#e94560', '#ffffff', '#ffd700']
-        });
+        // Play the comedic record scratch
+        audioScratch.play().catch(e => console.log("Scratch missing:", e));
         
-        // Move to next screen
-        switchScreen(screen1, screen2);
+        // Flash the screen white and hide text instantly
+        document.body.classList.add('flash-bang');
+        screen1.classList.remove('active');
+        screen1.style.display = 'none';
+
+        // Wait 1.2 seconds for the scratch to finish before dropping the clown music
+        setTimeout(() => {
+            document.body.classList.remove('flash-bang');
+            
+            // Start funny track
+            audio2.currentTime = 0;
+            audio2.play().catch(e => console.log("Audio 2 missing:", e));
+
+            // Fire explosion confetti
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#e94560', '#ffffff', '#ffd700']
+            });
+            
+            // Show next screen
+            screen2.classList.remove('hidden');
+            screen2.style.display = 'block';
+            setTimeout(() => screen2.classList.add('active'), 50);
+        }, 1200);
     });
 
     // Screen 2 -> Screen 3 (Screen shake + massive explosion + Wave on Wave)
