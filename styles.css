@@ -117,15 +117,37 @@ button:active {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Carousel Background */
-#carousel-bg {
+/* Film Reel Background */
+#film-reel-container {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: -1;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.3;
-    transition: background-image 2s ease-in-out;
+    overflow: hidden;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+}
+
+#film-reel-track {
+    display: flex;
+    height: 100%;
+    width: max-content;
+    opacity: 0.35; /* Keep it dim so text is readable */
+}
+
+.film-frame {
+    height: 100%;
+    width: auto;
+    border-left: 10px solid #000;
+    border-right: 10px solid #000;
+    box-sizing: border-box;
+    object-fit: contain; /* ensures images aren't cropped weirdly */
+    background-color: #000;
+}
+
+@keyframes scrollReel {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* stops at halfway mark (the duplicated array) */
 }
 
 .content-overlay {

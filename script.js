@@ -104,11 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
             startGentleConfetti();
         }, 3000);
         
-        // Start the picture carousel
-        startCarousel();
+        // Start the scrolling film reel
+        startFilmReel();
     });
 
-    // --- CAROUSEL LOGIC ---
+    // --- FILM REEL LOGIC ---
     // Put your picture filenames here!
     const familyPictures = [
         'pic100.jpg',
@@ -178,20 +178,24 @@ document.addEventListener('DOMContentLoaded', () => {
         'pic164.jpg'
     ];
     
-    let currentImageIndex = 0;
-    const carouselBg = document.getElementById('carousel-bg');
-    
-    function startCarousel() {
-        if (familyPictures.length === 0) return;
+    function startFilmReel() {
+        const track = document.getElementById('film-reel-track');
+        if (!track || familyPictures.length === 0) return;
         
-        // Set the very first image immediately
-        carouselBg.style.backgroundImage = `url('${familyPictures[0]}')`;
+        // Duplicate array so it scrolls seamlessly in a loop
+        const loopPics = [...familyPictures, ...familyPictures];
         
-        // Fade to the next image every 5 seconds
-        setInterval(() => {
-            currentImageIndex = (currentImageIndex + 1) % familyPictures.length;
-            carouselBg.style.backgroundImage = `url('${familyPictures[currentImageIndex]}')`;
-        }, 5000);
+        loopPics.forEach(pic => {
+            const img = document.createElement('img');
+            img.src = pic;
+            img.className = 'film-frame';
+            img.loading = 'lazy'; // crucial for performance with 65 images
+            track.appendChild(img);
+        });
+        
+        // Let's give each image about 6 seconds of screen time as it scrolls by
+        const duration = familyPictures.length * 6; 
+        track.style.animation = `scrollReel ${duration}s linear infinite`;
     }
 
     // --- CONFETTI LOGIC ---
