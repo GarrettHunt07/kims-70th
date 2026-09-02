@@ -271,12 +271,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function startFireworks() {
         const randomInRange = (min, max) => Math.random() * (max - min) + min;
         fireworksInterval = setInterval(function() {
+            // Realistic fireworks: small circles, decaying velocity
             confetti({
-                startVelocity: 30,
+                startVelocity: 35,
                 spread: 360,
                 ticks: 60,
                 zIndex: 0,
-                particleCount: 50,
+                particleCount: 80,
+                shapes: ['circle'],
+                colors: ['#ff0000', '#ffd700', '#ff00ff', '#00ffff', '#00ff00'],
+                scalar: 0.6,
+                decay: 0.92,
+                gravity: 0.7,
                 origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
             });
         }, 800); // 800ms between bursts
