@@ -144,7 +144,7 @@ button:active {
     display: flex;
     height: 100%;
     width: max-content;
-    opacity: 0.65; /* Bright and vivid photos that never black out */
+    opacity: 0.45; /* Clean contrast for floating text */
 }
 
 .film-frame {
@@ -292,22 +292,15 @@ body.upside-down {
 .content-overlay {
     position: relative;
     z-index: 1;
-    background: rgba(12, 12, 22, 0.72);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 2.5rem 2rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.12);
     max-width: 600px;
     width: 90%;
     margin: auto;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-    transition: opacity 2.5s ease-in-out, transform 2.5s ease-in-out;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 0, 0, 0.9);
+    transition: opacity 2.5s ease-in-out;
 }
 
 .content-overlay.fade-out {
     opacity: 0;
-    transform: scale(0.96);
     pointer-events: none;
 }
 
