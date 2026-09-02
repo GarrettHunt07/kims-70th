@@ -175,26 +175,48 @@ body.upside-down {
 
 
 
-@keyframes loveFadeIn {
-    0% { opacity: 0; filter: blur(5px); }
-    100% { opacity: 1; filter: blur(0); }
+@keyframes loveReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(18px);
+        filter: blur(3px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
 }
 
 .love-text {
     opacity: 0;
 }
 
-.screen.active #toast-content .love-text,
-#daughter-message:not(.hidden) .love-text {
-    animation: loveFadeIn 2.2s ease-in-out forwards;
+.screen.active #toast-content .love-text {
+    animation: loveReveal 1.1s ease-out forwards;
 }
 
-.love-delay-1 { animation-delay: 0.2s; } /* Super fast title reveal */
-.love-delay-2 { animation-delay: 1.8s; }
-.love-delay-3 { animation-delay: 3.5s; }
-.love-delay-4 { animation-delay: 5.2s; }
-.love-delay-5 { animation-delay: 6.8s; }
-.love-delay-6 { animation-delay: 8.5s; }
+.love-delay-1 { animation-delay: 0.5s; } /* "Happy 70th Birthday, Dad!" */
+.love-delay-2 { animation-delay: 2.3s; } /* "All jokes aside..." */
+.love-delay-3 { animation-delay: 4.6s; } /* "Thank you for 70 years..." */
+.love-delay-4 { animation-delay: 6.8s; } /* "Love, Kimbra & The Hunt Family" */
+.love-delay-5 { animation-delay: 8.5s; } /* Daughter button */
+
+/* Daughter's personal message: smooth, emotional sentence-by-sentence */
+.daughter-text {
+    opacity: 0;
+}
+
+#daughter-message.active .daughter-text {
+    animation: loveReveal 1.2s ease-out forwards;
+}
+
+.daughter-delay-1 { animation-delay: 0.5s; }  /* "Dad," */
+.daughter-delay-2 { animation-delay: 2.2s; }  /* "Thank you for 70 years..." */
+.daughter-delay-3 { animation-delay: 4.8s; }  /* "From the very beginning..." */
+.daughter-delay-4 { animation-delay: 7.4s; }  /* "I hope this birthday..." */
+.daughter-delay-5 { animation-delay: 9.8s; }  /* "I love you so much." */
+.daughter-delay-6 { animation-delay: 11.5s; } /* "Love, Kimbra" */
 
 .reveal-1, .reveal-2, .reveal-3, .reveal-4, .reveal-5, .reveal-6, .reveal-7, .reveal-8, .reveal-9 {
     opacity: 0;

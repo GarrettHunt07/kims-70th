@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn3.addEventListener('click', () => {
         toastContent.style.display = 'none';
         daughterMessage.classList.remove('hidden');
-        // The CSS animations on .love-text will automatically trigger when .hidden is removed!
+        daughterMessage.classList.add('active');
     });
     const btn0 = document.getElementById('btn-0');
     const btn1 = document.getElementById('btn-1');
