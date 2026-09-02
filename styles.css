@@ -27,7 +27,15 @@ body, html {
 }
 
 .screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     height: 100vh;
@@ -37,7 +45,7 @@ body, html {
 }
 
 .screen.active {
-    display: block;
+    display: flex;
     opacity: 1;
     animation: fadeIn 0.5s;
 }
