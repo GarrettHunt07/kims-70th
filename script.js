@@ -53,11 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Play Mario Power Up Sound
         audioPowerup.play().catch(e => console.log("Powerup missing:", e));
 
-        // Wait ~1 second for the sound to finish, then drop Stayin' Alive
+        // Wait ~3 seconds (1s for Mario sound + 2s gap) then drop Stayin' Alive
         setTimeout(() => {
             audio2.currentTime = 82.5;
             audio2.play().catch(e => console.log("Audio 2 missing:", e));
-        }, 1000);
+        }, 3000);
 
         // Fire explosion confetti and start background fireworks
         confetti({
