@@ -195,37 +195,37 @@ body.upside-down {
 
 .screen.active #toast-content .love-text {
     animation-name: loveFadeIn;
-    animation-duration: 2.0s;
+    animation-duration: 1.5s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
 }
 
-.screen.active #toast-content .love-delay-1, .love-delay-1 { animation-delay: 0.5s !important; }  /* "Happy 70th Birthday, Dad!" */
-.screen.active #toast-content .love-delay-2, .love-delay-2 { animation-delay: 3.5s !important; }  /* "All jokes aside..." */
-.screen.active #toast-content .love-delay-3, .love-delay-3 { animation-delay: 6.8s !important; }  /* "Thank you for 70 years of making the world a better place." */
-.screen.active #toast-content .love-delay-4, .love-delay-4 { animation-delay: 9.8s !important; }  /* "We love you more than words can say!" */
-.screen.active #toast-content .love-delay-5, .love-delay-5 { animation-delay: 12.8s !important; } /* "Love, Kimbra & The Hunt Family ❤️" */
-.screen.active #toast-content .love-delay-6, .love-delay-6 { animation-delay: 15.5s !important; } /* Daughter button */
+.screen.active #toast-content .love-delay-1, .love-delay-1 { animation-delay: 0.4s !important; }  /* "Happy 70th Birthday, Dad!" */
+.screen.active #toast-content .love-delay-2, .love-delay-2 { animation-delay: 2.7s !important; }  /* "All jokes aside..." */
+.screen.active #toast-content .love-delay-3, .love-delay-3 { animation-delay: 5.0s !important; }  /* "Thank you for 70 years of making the world a better place." */
+.screen.active #toast-content .love-delay-4, .love-delay-4 { animation-delay: 7.3s !important; }  /* "We love you more than words can say!" */
+.screen.active #toast-content .love-delay-5, .love-delay-5 { animation-delay: 9.6s !important; }  /* "Love, Kimbra & The Hunt Family ❤️" */
+.screen.active #toast-content .love-delay-6, .love-delay-6 { animation-delay: 11.8s !important; } /* Daughter button */
 
-/* Daughter's personal message: smooth, loving slow line-by-line fade-in with pauses */
+/* Daughter's personal message: 0.5s faster bloom with graceful line-by-line pacing */
 .daughter-text {
     opacity: 0;
 }
 
 #daughter-message.active .daughter-text {
     animation-name: loveFadeIn;
-    animation-duration: 2.0s;
+    animation-duration: 1.5s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
 }
 
-#daughter-message.active .daughter-delay-1, .daughter-delay-1 { animation-delay: 0.5s !important; }  /* "Dad," */
-#daughter-message.active .daughter-delay-2, .daughter-delay-2 { animation-delay: 3.5s !important; }  /* "Thank you for a lifetime of incredible memories," */
-#daughter-message.active .daughter-delay-3, .daughter-delay-3 { animation-delay: 6.8s !important; }  /* "and for always being my biggest hero." */
-#daughter-message.active .daughter-delay-4, .daughter-delay-4 { animation-delay: 10.2s !important; } /* "From the very beginning..." */
-#daughter-message.active .daughter-delay-5, .daughter-delay-5 { animation-delay: 14.0s !important; } /* "I hope this 70th birthday..." */
-#daughter-message.active .daughter-delay-6, .daughter-delay-6 { animation-delay: 17.5s !important; } /* "I love you so much." */
-#daughter-message.active .daughter-delay-7, .daughter-delay-7 { animation-delay: 20.5s !important; } /* "Love, Kimbra" */
+#daughter-message.active .daughter-delay-1, .daughter-delay-1 { animation-delay: 0.4s !important; }  /* "Dad," */
+#daughter-message.active .daughter-delay-2, .daughter-delay-2 { animation-delay: 2.6s !important; }  /* "Thank you for a lifetime of incredible memories," */
+#daughter-message.active .daughter-delay-3, .daughter-delay-3 { animation-delay: 4.8s !important; }  /* "and for always being my biggest hero." */
+#daughter-message.active .daughter-delay-4, .daughter-delay-4 { animation-delay: 7.1s !important; }  /* "From the very beginning..." */
+#daughter-message.active .daughter-delay-5, .daughter-delay-5 { animation-delay: 9.6s !important; }  /* "I hope this 70th birthday..." */
+#daughter-message.active .daughter-delay-6, .daughter-delay-6 { animation-delay: 11.9s !important; } /* "I love you so much." */
+#daughter-message.active .daughter-delay-7, .daughter-delay-7 { animation-delay: 14.0s !important; } /* "Love, Kimbra" */
 
 .reveal-1, .reveal-2, .reveal-3, .reveal-4, .reveal-5, .reveal-6, .reveal-7, .reveal-8, .reveal-9 {
     opacity: 0;

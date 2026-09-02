@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
         daughterMessage.classList.remove('hidden');
         daughterMessage.classList.add('active');
         
-        // Extended fade-out: gives Kim 30 full seconds to enjoy her message before it slowly fades out
+        // Backup fade-out in case Free Bird already started playing
         setTimeout(() => {
             daughterMessage.classList.add('fade-out');
-        }, 52000);
+        }, 25000);
     });
 
     // Tap/click screen 3 to bring the message back or hide it again
@@ -305,6 +305,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function blendToFreeBird() {
         console.log("Blending Wave on Wave into Free Bird by Lynyrd Skynyrd...");
+        
+        // Time Kimbra's message (or open text) to fade out right with the start of Free Bird!
+        if (daughterMessage) {
+            daughterMessage.classList.add('fade-out');
+        }
+        if (toastContent) {
+            toastContent.classList.add('fade-out');
+        }
+
         audio4.currentTime = 0;
         audio4.volume = 0;
         audio4.play().catch(e => console.log("Free Bird play error:", e));
