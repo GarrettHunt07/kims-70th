@@ -229,7 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'pic161.jpg',
         'pic162.jpg',
         'pic163.jpg',
-        'pic164.jpg'
+        'pic164.jpg',
+        'pic165.jpg',
+        'pic166.jpg'
     ];
     
     function startFilmReel() {
