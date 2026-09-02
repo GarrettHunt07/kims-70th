@@ -26,17 +26,32 @@
     <meta name="twitter:description" content="You have received an encrypted message for your 70th milestone. Tap to decrypt and unlock.">
     <meta name="twitter:image" content="https://kimsaunders.best/preview_card.jpg">
 
-    <link rel="stylesheet" href="styles.css?v=ios_crash_fix_v13">
+    <link rel="stylesheet" href="styles.css?v=universal_ios_v14">
     <!-- Canvas Confetti CDN for Explosions -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-    <!-- Audio Elements -->
-    <audio id="bg-audio-1" src="eerie_new.webm" loop></audio>
-    <audio id="bg-audio-powerup" src="powerup.webm"></audio>
-    <audio id="bg-audio-2" src="stayin_alive.webm" loop></audio>
-    <audio id="bg-audio-3" src="wave_on_wave.webm"></audio>
-    <audio id="bg-audio-4" src="free_bird.webm" loop></audio>
+    <!-- Audio Elements: MP3 for universal native iOS/Apple decoding + WebM for Chromium -->
+    <audio id="bg-audio-1" loop preload="auto">
+        <source src="eerie_new.mp3" type="audio/mpeg">
+        <source src="eerie_new.webm" type="audio/webm">
+    </audio>
+    <audio id="bg-audio-powerup" preload="auto">
+        <source src="powerup.mp3" type="audio/mpeg">
+        <source src="powerup.webm" type="audio/webm">
+    </audio>
+    <audio id="bg-audio-2" loop preload="auto">
+        <source src="stayin_alive.mp3" type="audio/mpeg">
+        <source src="stayin_alive.webm" type="audio/webm">
+    </audio>
+    <audio id="bg-audio-3" preload="auto">
+        <source src="wave_on_wave.mp3" type="audio/mpeg">
+        <source src="wave_on_wave.webm" type="audio/webm">
+    </audio>
+    <audio id="bg-audio-4" loop preload="auto">
+        <source src="free_bird.mp3" type="audio/mpeg">
+        <source src="free_bird.webm" type="audio/webm">
+    </audio>
 
     <div id="app">
         <!-- Screen 0: Autoplay Bypass & Intriguing Welcome -->
@@ -120,6 +135,6 @@
             <button id="reel-next" class="reel-nav-btn next-btn hidden" aria-label="Next Photo">&#10095;</button>
         </section>
     </div>
-    <script src="script.js?v=ios_crash_fix_v13"></script>
+    <script src="script.js?v=universal_ios_v14"></script>
 </body>
 </html>
