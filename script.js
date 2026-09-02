@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Wait ~1 second for the sound to finish, then drop Stayin' Alive
         setTimeout(() => {
-            audio2.currentTime = 72.5;
+            audio2.currentTime = 82.5;
             audio2.play().catch(e => console.log("Audio 2 missing:", e));
         }, 1000);
 

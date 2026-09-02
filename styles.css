@@ -167,9 +167,9 @@ body.upside-down {
 }
 
 .pop-1 { animation-delay: 1.0s; }
-.pop-2 { animation-delay: 4.0s; }
-.pop-3 { animation-delay: 7.0s; }
-.pop-4 { animation-delay: 11.0s; }
+.pop-2 { animation-delay: 2.5s; }
+.pop-3 { animation-delay: 4.5s; }
+.pop-4 { animation-delay: 7.0s; }
 
 .st-text {
     opacity: 0;
