@@ -198,12 +198,13 @@ body.upside-down {
 }
 
 .love-delay-1 { animation-delay: 0.5s; }  /* "Happy 70th Birthday, Dad!" */
-.love-delay-2 { animation-delay: 3.0s; }  /* "All jokes aside..." */
-.love-delay-3 { animation-delay: 6.0s; }  /* "Thank you for 70 years..." */
-.love-delay-4 { animation-delay: 9.0s; }  /* "Love, Kimbra & The Hunt Family" */
-.love-delay-5 { animation-delay: 11.5s; } /* Daughter button */
+.love-delay-2 { animation-delay: 2.8s; }  /* "All jokes aside..." */
+.love-delay-3 { animation-delay: 5.5s; }  /* "Thank you for 70 years of making the world a better place." */
+.love-delay-4 { animation-delay: 8.0s; }  /* "We love you more than words can say!" */
+.love-delay-5 { animation-delay: 10.5s; } /* "Love, Kimbra & The Hunt Family ❤️" */
+.love-delay-6 { animation-delay: 12.8s; } /* Daughter button */
 
-/* Daughter's personal message: smooth, loving slow fade-in */
+/* Daughter's personal message: smooth, loving slow line-by-line fade-in */
 .daughter-text {
     opacity: 0;
 }
@@ -213,11 +214,12 @@ body.upside-down {
 }
 
 .daughter-delay-1 { animation-delay: 0.5s; }  /* "Dad," */
-.daughter-delay-2 { animation-delay: 3.2s; }  /* "Thank you for a lifetime..." */
-.daughter-delay-3 { animation-delay: 6.5s; }  /* "From the very beginning..." */
-.daughter-delay-4 { animation-delay: 9.8s; }  /* "I hope this 70th birthday..." */
-.daughter-delay-5 { animation-delay: 12.8s; } /* "I love you so much." */
-.daughter-delay-6 { animation-delay: 15.0s; } /* "Love, Kimbra" */
+.daughter-delay-2 { animation-delay: 2.8s; }  /* "Thank you for a lifetime of incredible memories," */
+.daughter-delay-3 { animation-delay: 5.2s; }  /* "and for always being my biggest hero." */
+.daughter-delay-4 { animation-delay: 7.8s; }  /* "From the very beginning..." */
+.daughter-delay-5 { animation-delay: 10.8s; } /* "I hope this 70th birthday..." */
+.daughter-delay-6 { animation-delay: 13.8s; } /* "I love you so much." */
+.daughter-delay-7 { animation-delay: 16.0s; } /* "Love, Kimbra" */
 
 .reveal-1, .reveal-2, .reveal-3, .reveal-4, .reveal-5, .reveal-6, .reveal-7, .reveal-8, .reveal-9 {
     opacity: 0;
@@ -320,10 +322,10 @@ body.upside-down {
 .content-overlay p {
     font-size: 1.35rem;
     font-weight: 700; /* Bolder font for crystal-clear readability */
-    line-height: 1.8;
+    line-height: 1.75;
     color: #ffffff;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 1), 0 0 25px rgba(0, 0, 0, 1), 0 0 5px rgba(0, 0, 0, 0.9);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .content-overlay .signature {
