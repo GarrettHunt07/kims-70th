@@ -158,11 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switchScreen(screen2, screen3);
         
-        // Start continuous gentle confetti for the heartfelt message
-        setTimeout(() => {
-            startGentleConfetti();
-        }, 3000);
-        
         // Start the scrolling film reel
         startFilmReel();
     });
