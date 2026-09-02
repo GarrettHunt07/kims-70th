@@ -207,7 +207,7 @@ body.upside-down {
 .reveal-8 { animation-delay: 5.4s; }
 .reveal-9 { animation-delay: 6.8s; }
 
-.st-text {
+.st-text { animation: stFadeIn 3s ease-in-out forwards;
     opacity: 0;
 }
 
@@ -236,11 +236,11 @@ body.upside-down {
     100% { opacity: 1; transform: scale(1); filter: blur(0); }
 }
 
-.delay-1 { animation: stFadeIn 2s forwards 0.5s; }
-.delay-2 { animation: stFadeIn 2s forwards 2.5s; }
-.delay-3 { animation: stFadeIn 2s forwards 4.5s; }
-.delay-4 { animation: stFadeIn 2s forwards 6.5s; }
-.delay-5 { animation: stFadeIn 2s forwards 8.5s; }
+.delay-1 { animation-delay: 0.5s; }
+.delay-2 { animation-delay: 2.5s; }
+.delay-3 { animation-delay: 4.5s; }
+.delay-4 { animation-delay: 6.5s; }
+.delay-5 { animation-delay: 8.5s; }
 
 @keyframes scrollReel {
     0% { transform: translateX(0); }
