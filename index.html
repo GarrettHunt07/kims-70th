@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 70th, Kim!</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Canvas Confetti CDN for Explosions -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <!-- Audio Elements -->
+    <audio id="bg-audio-1" src="eerie.webm" loop></audio>
+    <audio id="bg-audio-2" src="funny.webm" loop></audio>
+    <audio id="bg-audio-3" src="wave_on_wave.webm" loop></audio>
+
+    <div id="app">
+        <!-- Screen 0: Autoplay Bypass -->
+        <section id="screen-0" class="screen active">
+            <h1>You have a special message... 💌</h1>
+            <p>Make sure your volume is turned up to hear the music!</p>
+            <button id="btn-0">Open Message</button>
+        </section>
+
+        <!-- Screen 1: The Teaser (Classy & less spammy) -->
+        <section id="screen-1" class="screen hidden">
+            <h1>A Special Delivery For Kim 🎂</h1>
+            <p>You are officially requested to unlock your 70th Birthday Surprise.<br><br>Ready to celebrate?</p>
+            <button id="btn-1">Let's Go!</button>
+        </section>
+
+        <!-- Screen 2: The Roast -->
+        <section id="screen-2" class="screen hidden">
+            <h1>Verification complete. ✅</h1>
+            <h2>Welcome to Level 70! 🏆</h2>
+            <p>You've officially unlocked:</p>
+            <ul>
+                <li>Unexplained phantom aches</li>
+                <li>Uncontrollable urges to nap in recliners</li>
+                <li>The absolute legal right to complain about "kids these days"</li>
+            </ul>
+            <button id="btn-2">Accept Your New Superpowers</button>
+        </section>
+
+        <!-- Screen 3: The Toast -->
+        <section id="screen-3" class="screen hidden">
+            <div id="carousel-bg"></div>
+            <div class="content-overlay">
+                <h1>Happy 70th Birthday, Dad! 🎉</h1>
+                <p>All jokes aside, you've always been our rock, our guide, and our biggest inspiration.</p>
+                <p>Thank you for 70 years of making the world a better place. We love you more than words can say!</p>
+                <p class="signature">Love, Kimbra & The Hunt Family ❤️</p>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
