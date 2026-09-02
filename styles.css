@@ -244,3 +244,6 @@ body.upside-down {
     z-index: 1;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
 }
+
+.hidden { display: none !important; }
+
