@@ -562,6 +562,42 @@ body.upside-down {
     }
 }
 
+/* Screen 2 Mobile Optimization (guarantees button is visible without scrolling) */
+@media (max-width: 600px) {
+    #screen-2 {
+        padding: 1rem 1rem 1.5rem 1rem;
+        justify-content: center;
+    }
+    #screen-2 h1 {
+        font-size: 1.85rem;
+        margin-bottom: 0.35rem;
+    }
+    #screen-2 h2 {
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+    }
+    #screen-2 p {
+        font-size: 1.05rem;
+        margin-bottom: 0.6rem;
+    }
+    #screen-2 ul {
+        font-size: 0.95rem;
+        line-height: 1.45;
+        margin: 0 auto 1rem auto;
+        padding-left: 0.5rem;
+        max-width: 95%;
+    }
+    #screen-2 ul li {
+        margin-bottom: 0.4rem;
+    }
+    #screen-2 button {
+        font-size: 1.05rem;
+        padding: 12px 24px;
+        margin-top: 0.5rem;
+    }
+}
+
 .hidden { display: none !important; }
+
 
 
