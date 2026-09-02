@@ -317,10 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Blending Wave on Wave into Free Bird by Lynyrd Skynyrd...");
         freeBirdStarted = true;
         
-        // If Kim hasn't clicked the daughter button yet, fade out toast content
-        if (toastContent && !btn3ClickedTime) {
-            toastContent.classList.add('fade-out');
-        }
+        // Keep the first half of the message (toastContent) visible indefinitely until the button is pressed!
 
         // If Kim clicked the daughter button:
         if (btn3ClickedTime && daughterMessage) {
