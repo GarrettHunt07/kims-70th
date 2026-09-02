@@ -182,33 +182,52 @@ body.upside-down {
 
 .love-text {
     opacity: 0;
-    animation: loveFadeIn 2.5s ease-in-out forwards;
+}
+
+.screen.active #toast-content .love-text,
+#daughter-message:not(.hidden) .love-text {
+    animation: loveFadeIn 2.2s ease-in-out forwards;
 }
 
 .love-delay-1 { animation-delay: 0.2s; } /* Super fast title reveal */
-.love-delay-2 { animation-delay: 2.0s; }
-.love-delay-3 { animation-delay: 4.0s; }
-.love-delay-4 { animation-delay: 6.0s; }
-.love-delay-5 { animation-delay: 8.0s; }
-.love-delay-6 { animation-delay: 10.0s; }
+.love-delay-2 { animation-delay: 1.8s; }
+.love-delay-3 { animation-delay: 3.5s; }
+.love-delay-4 { animation-delay: 5.2s; }
+.love-delay-5 { animation-delay: 6.8s; }
+.love-delay-6 { animation-delay: 8.5s; }
 
 .reveal-1, .reveal-2, .reveal-3, .reveal-4, .reveal-5, .reveal-6, .reveal-7, .reveal-8, .reveal-9 {
     opacity: 0;
+}
+
+.screen.active .reveal-1,
+.screen.active .reveal-2,
+.screen.active .reveal-3,
+.screen.active .reveal-4,
+.screen.active .reveal-5,
+.screen.active .reveal-6,
+.screen.active .reveal-7,
+.screen.active .reveal-8,
+.screen.active .reveal-9 {
     animation: smoothReveal 0.8s ease-out forwards;
 }
 
-.reveal-1 { animation-delay: 0.5s; }
-.reveal-2 { animation-delay: 1.2s; }
-.reveal-3 { animation-delay: 1.9s; }
-.reveal-4 { animation-delay: 2.6s; }
-.reveal-5 { animation-delay: 3.3s; }
-.reveal-6 { animation-delay: 4.0s; }
-.reveal-7 { animation-delay: 4.7s; }
-.reveal-8 { animation-delay: 5.4s; }
-.reveal-9 { animation-delay: 6.8s; }
+.screen.active .reveal-1 { animation-delay: 0.5s; }
+.screen.active .reveal-2 { animation-delay: 1.2s; }
+.screen.active .reveal-3 { animation-delay: 1.9s; }
+.screen.active .reveal-4 { animation-delay: 2.6s; }
+.screen.active .reveal-5 { animation-delay: 3.3s; }
+.screen.active .reveal-6 { animation-delay: 4.0s; }
+.screen.active .reveal-7 { animation-delay: 4.7s; }
+.screen.active .reveal-8 { animation-delay: 5.4s; }
+.screen.active .reveal-9 { animation-delay: 6.5s; }
 
-.st-text { animation: stFadeIn 3s ease-in-out forwards;
+.st-text {
     opacity: 0;
+}
+
+.screen.active .st-text {
+    animation: stFadeIn 2.5s ease-in-out forwards;
 }
 
 .st-glow {
@@ -236,11 +255,11 @@ body.upside-down {
     100% { opacity: 1; transform: scale(1); filter: blur(0); }
 }
 
-.delay-1 { animation-delay: 0.5s; }
-.delay-2 { animation-delay: 2.5s; }
-.delay-3 { animation-delay: 4.5s; }
-.delay-4 { animation-delay: 6.5s; }
-.delay-5 { animation-delay: 8.5s; }
+.screen.active .delay-1, .delay-1 { animation-delay: 0.5s; }
+.screen.active .delay-2, .delay-2 { animation-delay: 2.0s; }
+.screen.active .delay-3, .delay-3 { animation-delay: 3.5s; }
+.screen.active .delay-4, .delay-4 { animation-delay: 5.0s; }
+.screen.active .delay-5, .delay-5 { animation-delay: 6.5s; }
 
 @keyframes scrollReel {
     0% { transform: translateX(0); }

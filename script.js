@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
         hideScreen.classList.remove('active');
         setTimeout(() => {
             hideScreen.style.display = 'none';
-            showScreen.style.display = 'block';
+            showScreen.classList.remove('hidden');
+            showScreen.style.display = 'flex';
             setTimeout(() => {
                 showScreen.classList.add('active');
             }, 50);
