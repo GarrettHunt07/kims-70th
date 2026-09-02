@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
         audio1.pause();
         audio1.currentTime = 0;
         
-        // Start funny track at 48 seconds
-        audio2.currentTime = 48;
+        // Start funny track from the beginning
+        audio2.currentTime = 0;
         audio2.play().catch(e => console.log("Audio 2 missing or blocked:", e));
 
         // Fire explosion confetti
