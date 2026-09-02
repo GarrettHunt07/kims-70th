@@ -26,52 +26,64 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2600);
     }
 
+    let heartsAlreadyFell = false;
+
     function showerFallingHearts() {
+        if (heartsAlreadyFell) return;
+        heartsAlreadyFell = true;
+
         const heartContainer = document.createElement('div');
         heartContainer.id = 'heart-shower-container';
         document.body.appendChild(heartContainer);
 
-        const heartSymbols = ['❤️', '💖', '💕', '💗', '🥰', '✨'];
-        const totalHearts = 38;
+        const heartSymbols = ['❤️', '💖', '💕', '💗', '🥰', '💓', '✨'];
+        const totalHearts = 45;
 
         for (let i = 0; i < totalHearts; i++) {
             setTimeout(() => {
                 const heart = document.createElement('div');
                 heart.className = 'falling-heart';
-                heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.innerText = heartSymbols[i % heartSymbols.length];
                 
-                // Random position and natural flutter physics
                 const leftPos = Math.random() * 92 + 4; // 4% to 96%
-                const size = Math.random() * 1.3 + 1.3; // 1.3rem to 2.6rem
-                const duration = Math.random() * 2.0 + 2.8; // 2.8s to 4.8s
-                const swayDir = Math.random() > 0.5 ? 1 : -1;
+                const size = Math.random() * 1.5 + 1.4; // 1.4rem to 2.9rem
+                const duration = Math.random() * 1.8 + 3.2; // 3.2s to 5.0s
                 
                 heart.style.left = `${leftPos}%`;
                 heart.style.fontSize = `${size}rem`;
                 heart.style.animationDuration = `${duration}s`;
-                heart.style.setProperty('--sway-dir', swayDir);
                 
-                // Once they finish falling across the screen, automatically remove from DOM!
-                heart.addEventListener('animationend', () => {
+                // Cleanup after falling completely across the screen
+                setTimeout(() => {
                     heart.remove();
                     if (heartContainer && heartContainer.children.length === 0) {
                         heartContainer.remove();
                     }
-                });
+                }, (duration * 1000) + 300);
 
                 heartContainer.appendChild(heart);
-            }, i * 110);
+            }, i * 90);
         }
 
         // Soft gentle burst of pink/rose/gold confetti from the top
-        confetti({
-            particleCount: 28,
-            spread: 85,
-            startVelocity: 14,
-            gravity: 0.5,
-            ticks: 220,
-            origin: { x: 0.5, y: -0.05 },
-            colors: ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffd700', '#ffffff']
+        if (typeof confetti === 'function') {
+            confetti({
+                particleCount: 35,
+                spread: 85,
+                startVelocity: 16,
+                gravity: 0.6,
+                ticks: 240,
+                origin: { x: 0.5, y: 0.05 },
+                colors: ['#ff4d6d', '#ff758f', '#ffb3c1', '#ffd700', '#ffffff']
+            });
+        }
+    }
+
+    // Attach directly to the animation of the line "I love you so much."
+    const loveYouLine = document.getElementById('love-you-line');
+    if (loveYouLine) {
+        loveYouLine.addEventListener('animationstart', () => {
+            showerFallingHearts();
         });
     }
 
