@@ -605,12 +605,14 @@ body.upside-down {
     #screen-3 {
         height: 100vh;
         height: 100dvh;
-        padding-bottom: 0.5rem;
+        padding: 0;
         justify-content: center;
+        align-items: center;
     }
 
-    #toast-content {
-        margin-top: -35px; /* Pull the entire card significantly up away from the bottom toolbar */
+    #toast-content,
+    #daughter-message {
+        margin: auto;
     }
 
     .content-overlay {
