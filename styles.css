@@ -144,7 +144,7 @@ button:active {
     display: flex;
     height: 100%;
     width: max-content;
-    opacity: 0.45; /* Clean contrast for floating text */
+    opacity: 1; /* 100% full original photo brightness */
 }
 
 .film-frame {
