@@ -601,18 +601,30 @@ body.upside-down {
         margin-top: 0.5rem;
     }
 
-    /* Screen 3 / Toast & Daughter Message Mobile Optimization (lifts button up) */
+    /* Screen 3 / Toast & Daughter Message Mobile Optimization: 100% Dead-Center */
     #screen-3 {
-        height: 100vh;
-        height: 100dvh;
-        padding: 0;
-        justify-content: center;
-        align-items: center;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
     }
 
     #toast-content,
     #daughter-message {
-        margin: auto;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
     .content-overlay {
