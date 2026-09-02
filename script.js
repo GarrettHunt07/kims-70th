@@ -9,15 +9,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const toastContent = document.getElementById('toast-content');
     const daughterMessage = document.getElementById('daughter-message');
 
+    let btn3ClickedTime = 0;
+    let freeBirdStarted = false;
+    const DAUGHTER_FULL_REVEAL_MS = 15500; // All lines finish blooming in at ~15.5s
+    const EXTRA_WAIT_MS = 5000;            // Wait 5 seconds after completely visible
+    const TOTAL_MIN_DISPLAY_MS = DAUGHTER_FULL_REVEAL_MS + EXTRA_WAIT_MS; // 20.5s total
+
     btn3.addEventListener('click', () => {
+        btn3ClickedTime = Date.now();
         toastContent.style.display = 'none';
         daughterMessage.classList.remove('hidden');
         daughterMessage.classList.add('active');
         
-        // Backup fade-out in case Free Bird already started playing
-        setTimeout(() => {
-            daughterMessage.classList.add('fade-out');
-        }, 25000);
+        // If Free Bird has ALREADY started playing when he clicks the button:
+        // Wait until the message is completely visible, then fade out after 5 seconds!
+        if (freeBirdStarted) {
+            setTimeout(() => {
+                daughterMessage.classList.add('fade-out');
+            }, TOTAL_MIN_DISPLAY_MS);
+        }
     });
 
     // Tap/click screen 3 to bring the message back or hide it again
@@ -109,8 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
         audio2.pause();
         audio2.currentTime = 0;
         
-        // Start "Wave on Wave" right before the last big chorus (around 3:00 / 180s)
-        audio3.currentTime = 180;
+        // Start "Wave on Wave" 3 seconds further forward right before the last big chorus (around 3:03 / 183s)
+        audio3.currentTime = 183;
         audio3.volume = 0.8;
         audio3.play().catch(e => console.log("Audio 3 missing or blocked:", e));
         setupFreeBirdBlend();
@@ -305,13 +315,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function blendToFreeBird() {
         console.log("Blending Wave on Wave into Free Bird by Lynyrd Skynyrd...");
+        freeBirdStarted = true;
         
-        // Time Kimbra's message (or open text) to fade out right with the start of Free Bird!
-        if (daughterMessage) {
-            daughterMessage.classList.add('fade-out');
-        }
-        if (toastContent) {
+        // If Kim hasn't clicked the daughter button yet, fade out toast content
+        if (toastContent && !btn3ClickedTime) {
             toastContent.classList.add('fade-out');
+        }
+
+        // If Kim clicked the daughter button:
+        if (btn3ClickedTime && daughterMessage) {
+            const elapsed = Date.now() - btn3ClickedTime;
+            if (elapsed >= TOTAL_MIN_DISPLAY_MS) {
+                // The message has already been completely visible for at least 5 seconds:
+                // Fade out right on cue with the start of Free Bird!
+                daughterMessage.classList.add('fade-out');
+            } else {
+                // Free Bird started before the message finished or before 5 seconds passed:
+                // Wait until it is completely visible, then fade out after 5 seconds!
+                const remainingWait = TOTAL_MIN_DISPLAY_MS - elapsed;
+                setTimeout(() => {
+                    daughterMessage.classList.add('fade-out');
+                }, remainingWait);
+            }
         }
 
         audio4.currentTime = 0;
