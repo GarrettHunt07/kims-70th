@@ -153,14 +153,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn2 = document.getElementById('btn-2');
 
     const audio1 = document.getElementById('bg-audio-1');
+    const audioPowerup = document.getElementById('bg-audio-powerup');
     const audio2 = document.getElementById('bg-audio-2');
     const audio3 = document.getElementById('bg-audio-3');
     const audio4 = document.getElementById('bg-audio-4');
 
     // Set volumes
-    audio1.volume = 0.6;
-    audio2.volume = 0.6;
-    audio3.volume = 0.8;
+    if (audio1) audio1.volume = 0.6;
+    if (audioPowerup) audioPowerup.volume = 0.9;
+    if (audio2) audio2.volume = 0.6;
+    if (audio3) audio3.volume = 0.8;
+
+    // iOS Safari Audio Unlocker: primes all tracks on the first tap so iOS doesn't block later music
+    function primeAllAudioForIOS() {
+        const allAudios = [audio1, audioPowerup, audio2, audio3, audio4];
+        allAudios.forEach(aud => {
+            if (aud) {
+                const promise = aud.play();
+                if (promise !== undefined) {
+                    promise.then(() => {
+                        if (aud !== audio1) {
+                            aud.pause();
+                            aud.currentTime = 0;
+                        }
+                    }).catch(err => {
+                        console.log("Audio prime note:", err);
+                    });
+                }
+            }
+        });
+    }
 
     // Utility to switch screens with a fade effect
     function switchScreen(hideScreen, showScreen) {
@@ -181,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Screen 0 -> Screen 1 (Bypass Autoplay & Start Eerie Music)
     btn0.addEventListener('click', () => {
+        primeAllAudioForIOS();
         requestWakeLock();
         preloadFamilyPictures();
         audio1.play().catch(e => console.log("Audio 1 missing or blocked:", e));
@@ -190,9 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('upside-down');
         startUpsideDownAsh();
     });
-
-    const audioPowerup = document.getElementById('bg-audio-powerup');
-    audioPowerup.volume = 0.9;
 
     // Screen 1 -> Screen 2 (Standard Explosion + Transition Music)
     btn1.addEventListener('click', () => {
