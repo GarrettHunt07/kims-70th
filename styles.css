@@ -656,11 +656,11 @@ body.upside-down {
 
 /* --- Falling Hearts Shower Effect (Daughter's Letter Climax) --- */
 #heart-shower-container {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     z-index: 99999;
     overflow: hidden;
@@ -668,39 +668,64 @@ body.upside-down {
 
 .falling-heart {
     position: absolute;
-    top: -70px;
+    top: -60px;
     user-select: none;
+    -webkit-user-select: none;
     pointer-events: none;
     will-change: transform, opacity;
-    animation-name: fallDownScreen;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-    animation-duration: 4s;
-    filter: drop-shadow(0 0 12px rgba(255, 77, 109, 0.8));
-    display: block;
+    -webkit-animation: fallDownScreen 4s linear forwards;
+    animation: fallDownScreen 4s linear forwards;
+    text-shadow: 0 0 12px rgba(255, 77, 109, 0.9), 0 0 20px rgba(255, 100, 130, 0.6);
+    line-height: 1;
+    display: inline-block;
 }
 
-@keyframes fallDownScreen {
+@-webkit-keyframes fallDownScreen {
     0% {
-        transform: translateY(0) rotate(0deg) scale(0.6);
+        -webkit-transform: translate3d(0, 0, 0) rotate(0deg) scale(0.6);
         opacity: 0;
     }
     10% {
         opacity: 1;
-        transform: translateY(12vh) rotate(8deg) scale(1.1);
+        -webkit-transform: translate3d(0, 12vh, 0) rotate(8deg) scale(1.1);
     }
     35% {
-        transform: translateY(40vh) rotate(-10deg) scale(1);
+        -webkit-transform: translate3d(0, 40vh, 0) rotate(-10deg) scale(1);
     }
     70% {
         opacity: 0.95;
-        transform: translateY(80vh) rotate(12deg) scale(1.05);
+        -webkit-transform: translate3d(0, 80vh, 0) rotate(12deg) scale(1.05);
     }
     90% {
         opacity: 0.85;
     }
     100% {
-        transform: translateY(118vh) rotate(-15deg) scale(0.9);
+        -webkit-transform: translate3d(0, 118vh, 0) rotate(-15deg) scale(0.9);
+        opacity: 0;
+    }
+}
+
+@keyframes fallDownScreen {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(0.6);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translate3d(0, 12vh, 0) rotate(8deg) scale(1.1);
+    }
+    35% {
+        transform: translate3d(0, 40vh, 0) rotate(-10deg) scale(1);
+    }
+    70% {
+        opacity: 0.95;
+        transform: translate3d(0, 80vh, 0) rotate(12deg) scale(1.05);
+    }
+    90% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translate3d(0, 118vh, 0) rotate(-15deg) scale(0.9);
         opacity: 0;
     }
 }

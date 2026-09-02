@@ -34,10 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const heartContainer = document.createElement('div');
         heartContainer.id = 'heart-shower-container';
-        document.body.appendChild(heartContainer);
+        const targetParent = document.getElementById('screen-3') || document.body;
+        targetParent.appendChild(heartContainer);
 
         const heartSymbols = ['❤️', '💖', '💕', '💗', '🥰', '💓', '✨'];
-        const totalHearts = 45;
+        const totalHearts = 50;
 
         for (let i = 0; i < totalHearts; i++) {
             setTimeout(() => {
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 heart.style.left = `${leftPos}%`;
                 heart.style.fontSize = `${size}rem`;
                 heart.style.animationDuration = `${duration}s`;
+                heart.style.webkitAnimationDuration = `${duration}s`;
                 
                 // Cleanup after falling completely across the screen
                 setTimeout(() => {
@@ -62,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, (duration * 1000) + 300);
 
                 heartContainer.appendChild(heart);
-            }, i * 90);
+            }, i * 85);
         }
 
         // Soft gentle burst of pink/rose/gold confetti from the top
@@ -79,12 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Attach directly to the animation of the line "I love you so much."
+    // Attach directly to both standard and WebKit animationstart of "I love you so much."
     const loveYouLine = document.getElementById('love-you-line');
     if (loveYouLine) {
-        loveYouLine.addEventListener('animationstart', () => {
-            showerFallingHearts();
-        });
+        loveYouLine.addEventListener('animationstart', showerFallingHearts);
+        loveYouLine.addEventListener('webkitAnimationStart', showerFallingHearts);
     }
 
     btn3.addEventListener('click', () => {
