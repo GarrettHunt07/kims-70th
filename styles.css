@@ -136,12 +136,13 @@ button:active {
 }
 
 .film-frame {
-    height: 100%;
-    width: auto;
-    border-left: 10px solid #000;
-    border-right: 10px solid #000;
+    height: 100vh;
+    width: 80vw; /* Forces images to be large and prevents lazy-load width glitching */
+    flex-shrink: 0; /* Prevents the browser from squishing them */
+    border-left: 15px solid #000;
+    border-right: 15px solid #000;
     box-sizing: border-box;
-    object-fit: contain; /* ensures images aren't cropped weirdly */
+    object-fit: cover; /* Fills the frame nicely to make them look huge */
     background-color: #000;
 }
 
