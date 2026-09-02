@@ -304,8 +304,6 @@ button:active {
     box-sizing: border-box;
     object-fit: cover;
     background-color: #111;
-    transform: translateZ(0);
-    contain: paint layout;
     -webkit-user-drag: none;
     user-select: none;
     -webkit-user-select: none;

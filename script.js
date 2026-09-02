@@ -250,13 +250,30 @@ document.addEventListener('DOMContentLoaded', () => {
         stopFireworks();
         
         // Stop funny track
-        audio2.pause();
-        audio2.currentTime = 0;
+        if (audio2) {
+            audio2.pause();
+            audio2.currentTime = 0;
+        }
         
-        // Start "Wave on Wave" 3 seconds forward (3:03 / 183s)
-        audio3.currentTime = 183;
-        audio3.volume = 0.8;
-        audio3.play().catch(e => console.log("Audio 3 missing or blocked:", e));
+        // Start "Wave on Wave" with safe seek
+        if (audio3) {
+            audio3.volume = 0.8;
+            const safeSeekWave = () => {
+                try {
+                    if (audio3.readyState >= 1) {
+                        audio3.currentTime = Math.min(183, (audio3.duration || 183) - 1);
+                    }
+                } catch(e) {
+                    console.log("Audio 3 seek note:", e);
+                }
+            };
+            if (audio3.readyState >= 1) {
+                safeSeekWave();
+            } else {
+                audio3.addEventListener('loadedmetadata', safeSeekWave, { once: true });
+            }
+            audio3.play().catch(e => console.log("Audio 3 play note:", e));
+        }
         setupFreeBirdBlend();
 
         // Shake the entire page
@@ -265,30 +282,31 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove('shake');
         }, 500);
 
-        // Massive continuous burst for a few seconds
-        const duration = 2500;
-        const end = Date.now() + duration;
-
-        (function frame() {
+        // Crisp, high-impact celebration bursts (ultra-lightweight on mobile memory)
+        if (typeof confetti === 'function') {
             confetti({
-                particleCount: 5,
+                particleCount: 65,
                 angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: ['#e94560', '#ffb8b8', '#ffffff']
+                spread: 75,
+                origin: { x: 0, y: 0.7 },
+                colors: ['#e94560', '#ffb8b8', '#ffffff', '#ffd700']
             });
             confetti({
-                particleCount: 5,
+                particleCount: 65,
                 angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: ['#e94560', '#ffb8b8', '#ffffff']
+                spread: 75,
+                origin: { x: 1, y: 0.7 },
+                colors: ['#e94560', '#ffb8b8', '#ffffff', '#ffd700']
             });
-
-            if (Date.now() < end) {
-                requestAnimationFrame(frame);
-            }
-        }());
+            setTimeout(() => {
+                confetti({
+                    particleCount: 45,
+                    spread: 90,
+                    origin: { x: 0.5, y: 0.5 },
+                    colors: ['#e94560', '#ffd700', '#ffffff']
+                });
+            }, 300);
+        }
 
         switchScreen(screen2, screen3);
         
@@ -372,29 +390,34 @@ document.addEventListener('DOMContentLoaded', () => {
     let isInteracting = false;
     let isAutoScrollPaused = false;
     let resumeAutoScrollTimeout = null;
-    let halfWidth = 0;
+    let singleLoopWidth = 0;
     let reelAnimationId = null;
     let isSlideshowInteractive = false;
 
     function startFilmReel() {
         const track = document.getElementById('film-reel-track');
         if (!track || familyPictures.length === 0) return;
+        if (track.children.length > 0) return; // Prevent duplicate instantiation
         
-        // Duplicate array so it scrolls seamlessly in a loop
-        const loopPics = [...familyPictures, ...familyPictures];
+        // Append first 4 photos to end for seamless looping (71 photos instead of 134!)
+        const loopPics = [...familyPictures, ...familyPictures.slice(0, 4)];
         
-        loopPics.forEach(pic => {
+        loopPics.forEach((pic, i) => {
             const img = document.createElement('img');
             img.src = pic;
             img.className = 'film-frame';
-            img.loading = 'eager'; // Eager loading prevents blackout when scrolling horizontally
+            img.loading = (i < 4) ? 'eager' : 'lazy'; // Only decode first visible frames immediately; lazy-load rest
             img.decoding = 'async'; // Smooth background decoding
             track.appendChild(img);
         });
 
-        // Initialize halfWidth once DOM renders
+        // Initialize singleLoopWidth once DOM renders
         requestAnimationFrame(() => {
-            halfWidth = track.scrollWidth / 2;
+            if (track.children[familyPictures.length]) {
+                singleLoopWidth = track.children[familyPictures.length].offsetLeft;
+            } else {
+                singleLoopWidth = track.scrollWidth / 2;
+            }
         });
 
         // Smooth 60fps/120fps hardware-accelerated panoramic scroll
@@ -418,14 +441,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function wrapOffset() {
         const track = document.getElementById('film-reel-track');
         if (!track) return;
-        if (halfWidth <= 0) {
-            halfWidth = track.scrollWidth / 2;
+        if (singleLoopWidth <= 0) {
+            if (track.children[familyPictures.length]) {
+                singleLoopWidth = track.children[familyPictures.length].offsetLeft;
+            } else {
+                singleLoopWidth = track.scrollWidth / 2;
+            }
         }
-        if (halfWidth > 0) {
-            if (currentOffset <= -halfWidth) {
-                currentOffset += halfWidth;
+        if (singleLoopWidth > 0) {
+            if (currentOffset <= -singleLoopWidth) {
+                currentOffset += singleLoopWidth;
             } else if (currentOffset > 0) {
-                currentOffset -= halfWidth;
+                currentOffset -= singleLoopWidth;
             }
         }
     }
@@ -566,9 +593,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Preload pictures in background from start so they are already cached
+    // Preload first few pictures in background so Screen 3 appears instantly with zero memory pressure
     function preloadFamilyPictures() {
-        familyPictures.forEach(pic => {
+        familyPictures.slice(0, 4).forEach(pic => {
             const img = new Image();
             img.src = pic;
         });
