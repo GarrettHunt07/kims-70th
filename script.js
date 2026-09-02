@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
         startUpsideDownAsh();
     });
 
+    const audioPowerup = document.getElementById('bg-audio-powerup');
+    audioPowerup.volume = 0.9;
+
     // Screen 1 -> Screen 2 (Standard Explosion + Transition Music)
     btn1.addEventListener('click', () => {
         // Stop Upside Down vibe & Eerie music instantly
@@ -47,9 +50,14 @@ document.addEventListener('DOMContentLoaded', () => {
         audio1.pause();
         audio1.currentTime = 0;
         
-        // Start Stayin' Alive right at the chorus
-        audio2.currentTime = 62.5;
-        audio2.play().catch(e => console.log("Audio 2 missing:", e));
+        // Play Mario Power Up Sound
+        audioPowerup.play().catch(e => console.log("Powerup missing:", e));
+
+        // Wait ~1 second for the sound to finish, then drop Stayin' Alive
+        setTimeout(() => {
+            audio2.currentTime = 62.5;
+            audio2.play().catch(e => console.log("Audio 2 missing:", e));
+        }, 1000);
 
         // Fire explosion confetti and start background fireworks
         confetti({
