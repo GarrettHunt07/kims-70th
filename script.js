@@ -119,8 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
         audio2.pause();
         audio2.currentTime = 0;
         
-        // Start "Wave on Wave" 3 seconds further forward right before the last big chorus (around 3:03 / 183s)
-        audio3.currentTime = 183;
+        // Start "Wave on Wave" right before the last big chorus (3:00 / 180s)
+        audio3.currentTime = 180;
         audio3.volume = 0.8;
         audio3.play().catch(e => console.log("Audio 3 missing or blocked:", e));
         setupFreeBirdBlend();
