@@ -302,6 +302,13 @@ body.upside-down {
     width: 90%;
     margin: auto;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    transition: opacity 2.5s ease-in-out, transform 2.5s ease-in-out;
+}
+
+.content-overlay.fade-out {
+    opacity: 0;
+    transform: scale(0.96);
+    pointer-events: none;
 }
 
 .hidden { display: none !important; }

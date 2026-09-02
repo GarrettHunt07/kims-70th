@@ -13,7 +13,22 @@ document.addEventListener('DOMContentLoaded', () => {
         toastContent.style.display = 'none';
         daughterMessage.classList.remove('hidden');
         daughterMessage.classList.add('active');
+        
+        // After ~20 seconds after her final line appears (~32s after click),
+        // fade out the words so he can just watch the picture slideshow!
+        setTimeout(() => {
+            daughterMessage.classList.add('fade-out');
+        }, 32000);
     });
+
+    // Tap/click screen 3 to bring the message back or hide it again
+    screen3.addEventListener('click', (e) => {
+        if (e.target.tagName === 'BUTTON') return;
+        if (daughterMessage.classList.contains('active')) {
+            daughterMessage.classList.toggle('fade-out');
+        }
+    });
+
     const btn0 = document.getElementById('btn-0');
     const btn1 = document.getElementById('btn-1');
     const btn2 = document.getElementById('btn-2');
@@ -21,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audio1 = document.getElementById('bg-audio-1');
     const audio2 = document.getElementById('bg-audio-2');
     const audio3 = document.getElementById('bg-audio-3');
+    const audio4 = document.getElementById('bg-audio-4');
 
     // Set volumes
     audio1.volume = 0.6;
@@ -96,7 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Start "Wave on Wave" right after the lyric (around 0:53)
         audio3.currentTime = 53;
+        audio3.volume = 0.8;
         audio3.play().catch(e => console.log("Audio 3 missing or blocked:", e));
+        setupFreeBirdBlend();
 
         // Shake the entire page
         document.body.classList.add('shake');
@@ -255,6 +273,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 scalar: Math.random() * 0.8 + 0.4
             });
         }, 200);
+    }
+
+    // --- SONG BLENDING: WAVE ON WAVE -> FREE BIRD (LYNYRD SKYNYRD) ---
+    let isBlendingToFreeBird = false;
+
+    function setupFreeBirdBlend() {
+        if (!audio3 || !audio4) return;
+        audio4.load(); // Preload Free Bird in background
+        audio4.volume = 0;
+
+        audio3.addEventListener('timeupdate', () => {
+            if (audio3.duration && !isBlendingToFreeBird) {
+                // When 7 seconds remain in Wave on Wave, start crossfading into Free Bird
+                const timeLeft = audio3.duration - audio3.currentTime;
+                if (timeLeft <= 7 && timeLeft > 0) {
+                    isBlendingToFreeBird = true;
+                    blendToFreeBird();
+                }
+            }
+        });
+
+        // Backup in case timeupdate misses the window or track ends
+        audio3.addEventListener('ended', () => {
+            if (!isBlendingToFreeBird) {
+                isBlendingToFreeBird = true;
+                audio4.volume = 0.8;
+                audio4.play().catch(e => console.log("Free Bird play error:", e));
+            }
+        });
+    }
+
+    function blendToFreeBird() {
+        console.log("Blending Wave on Wave into Free Bird by Lynyrd Skynyrd...");
+        audio4.currentTime = 0;
+        audio4.volume = 0;
+        audio4.play().catch(e => console.log("Free Bird play error:", e));
+
+        const fadeSteps = 35;
+        const stepInterval = 170; // ~6 seconds total crossfade
+        const startVolume3 = audio3.volume || 0.8;
+        const targetVolume4 = 0.8;
+        let currentStep = 0;
+
+        const crossfadeTimer = setInterval(() => {
+            currentStep++;
+            const progress = currentStep / fadeSteps;
+
+            audio3.volume = Math.max(0, startVolume3 * (1 - progress));
+            audio4.volume = Math.min(targetVolume4, targetVolume4 * progress);
+
+            if (currentStep >= fadeSteps) {
+                clearInterval(crossfadeTimer);
+                audio3.pause();
+                audio3.volume = 0;
+                audio4.volume = targetVolume4;
+            }
+        }, stepInterval);
     }
 });
 
