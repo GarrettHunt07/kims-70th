@@ -51,13 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
         audio2.currentTime = 62.5;
         audio2.play().catch(e => console.log("Audio 2 missing:", e));
 
-        // Fire explosion confetti
+        // Fire explosion confetti and start background fireworks
         confetti({
             particleCount: 150,
             spread: 100,
             origin: { y: 0.6 },
             colors: ['#e94560', '#ffffff', '#ffd700']
         });
+        startFireworks();
         
         // Move to next screen
         switchScreen(screen1, screen2);
@@ -65,7 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Screen 2 -> Screen 3 (Screen shake + massive explosion + Wave on Wave)
     btn2.addEventListener('click', () => {
-        // Switch Audio
+        // Stop the fireworks from Screen 2
+        stopFireworks();
+        
+        // Stop funny track
         audio2.pause();
         audio2.currentTime = 0;
         
@@ -250,5 +254,27 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function stopUpsideDownAsh() {
         clearInterval(ashInterval);
+    }
+
+
+
+    // --- FIREWORKS LOGIC ---
+    let fireworksInterval;
+    function startFireworks() {
+        const randomInRange = (min, max) => Math.random() * (max - min) + min;
+        fireworksInterval = setInterval(function() {
+            confetti({
+                startVelocity: 30,
+                spread: 360,
+                ticks: 60,
+                zIndex: 0,
+                particleCount: 50,
+                origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
+            });
+        }, 800); // 800ms between bursts
+    }
+    
+    function stopFireworks() {
+        clearInterval(fireworksInterval);
     }
 
