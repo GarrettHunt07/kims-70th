@@ -441,12 +441,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function wrapOffset() {
         const track = document.getElementById('film-reel-track');
         if (!track) return;
-        if (singleLoopWidth <= 0) {
-            if (track.children[familyPictures.length]) {
-                singleLoopWidth = track.children[familyPictures.length].offsetLeft;
-            } else {
-                singleLoopWidth = track.scrollWidth / 2;
+        if (track.children[familyPictures.length]) {
+            const currentLoopWidth = track.children[familyPictures.length].offsetLeft;
+            if (currentLoopWidth > 0) {
+                singleLoopWidth = currentLoopWidth;
             }
+        }
+        if (singleLoopWidth <= 0) {
+            singleLoopWidth = track.scrollWidth / 2;
         }
         if (singleLoopWidth > 0) {
             if (currentOffset <= -singleLoopWidth) {
