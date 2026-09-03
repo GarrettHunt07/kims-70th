@@ -302,8 +302,8 @@ button:active {
     border-left: 12px solid #000;
     border-right: 12px solid #000;
     box-sizing: border-box;
-    object-fit: cover;
-    background-color: #111;
+    object-fit: contain;
+    background-color: #000;
     -webkit-user-drag: none;
     user-select: none;
     -webkit-user-select: none;
